@@ -222,7 +222,11 @@ You only need the `dyna_male.h5` and `dyna_female.h5` files.
 #### 🕺 4DHumanOutfit clothed sequences (Table 6)
 <!-- /data/FourDHumanOutfit/SCANS and /FourDHumanOutfit-FITS -->
 
-The dataset structure assumed is the following: `{path/to/4DHumanOutfit}/{subject_name}/{subject_name}-{clothing_type}-{action}/*/model-*.obj`.
+The dataset structure assumed is the following: 
+
+```
+{path/to/4DHumanOutfit}/{subject_name}/{subject_name}-{clothing_type}-{action}/*/model-*.obj
+```
 
 After you get the dataset, you can use:
 ```bash
@@ -251,14 +255,19 @@ avoid
 
 The scans provided by 4DHumanOutfit are the ones with resolution `OBJ_4DCVT_15k`.
 
-The dataset also comes with the fitted SMPL parameters (upon request) using the approach from [3], and the same format as the provided scans: `{path/to/fittings}/{subject_name}/{subject_name}-{clothing_type}-{action}/{parameter}.pt` where `{parameter}` is any of the follwing: `betas.pt`,`poses.pt` and `trans.pt`.
+The dataset also comes with the fitted SMPL parameters (upon request) using the approach from [3], in the same format as the provided scans: 
+```
+{path/to/fittings}/{subject_name}/{subject_name}-{clothing_type}-{action}/{parameter}.pt
+```
+
+where `{parameter}` is any of the follwing: `betas.pt`,`poses.pt` and `trans.pt`.
 
 
 Finally, you can obtain the landmarks by running:
 ```bash
 cd annotate
 
-python annotate_4DHumanOutfit_landmarks.py --scan_paths <path/to/4DHumanOutfit> --fit_paths <path/to/fittings> --transfer_method simple --nn_threshold 0.01
+python annotate_4DHumanOutfit_landmarks.py --scan_paths <path/to/4DHumanOutfit> --fit_paths <path/to/fittings> --transfer_method simple
 ```
 
 where
@@ -268,12 +277,13 @@ where
 - `transfer_method` is the way of obtaning the landmarks and can be one of the following:
 
   - `simple` where the transferred landmarks correspond to the actual SMPL landmarks
-  - `nn` where the transferred landmarks correspond to the nearest neighbor of each fitted SMPL landmark
-  - `nn_threshold` where the transferred landmark is the nearest neighbor of the fitted SMPL landmark if it is below the `nn_threshold` (defined below), else it is the actual SMPL landmark
+  - `nn` where the transferred landmarks correspond to the nearest neighbor of each fitted SMPL landmark and the scan
+  - `nn_threshold` where the transferred landmark is the nearest neighbor of the fitted SMPL landmark to the scan if the distance is below the `nn_threshold` (defined below), else it is the actual SMPL landmark
 
 - `nn_threshold` is the nearest neighbor threshold in meters for the nn_threshold transfer method
 
-The landmarks will be saved in the same folder as the parameters `fit_paths`.
+The landmarks will be saved in the same folder as the parameters `fit_paths` and the `transfer_method` used in the paper is the `simple` one.
+
 <br>
 
 
