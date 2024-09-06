@@ -1,0 +1,100 @@
+
+
+general:
+  continue_experiment: null
+  experiment_name: "Pose-independent anthropometry"
+
+
+visualization:
+  display: True # NOTE: run visdom in separate window as  visdom -p port
+  port: 8080
+  env: lm2meas
+
+
+learning:
+  model_name: SimpleMLP
+  dataset_name: NPZDataset
+  save_model: True
+  what_to_return: ["landmarks", "measurements"] #["landmarks", "gender", "measurements","name","pose_param","unposed_scan_bool","reposed_scan_bool"]
+  transform_landmarks: ["coords","distances_grouped"] #["coords","distances_grouped","angles_pose_grouped" , "angles_shape_grouped"]
+  landmark_normalization: pelvis
+  batch_size: 524288
+  n_workers: 7
+  nepoch: 8000
+  init_lr: 0.003
+  lrate_update_func: ConstantLR
+  measurements: ['Ankle Circumference (mm)',
+                  'Arm Length (Shoulder to Elbow) (mm)',
+                  'Arm Length (Shoulder to Wrist) (mm)',
+                  'Arm Length (Spine to Wrist) (mm)',
+                  'Chest Circumference (mm)',
+                  'Crotch Height (mm)',
+                  'Head Circumference (mm)',
+                  'Hip Circ Max Height (mm)',
+                  'Hip Circumference, Maximum (mm)',
+                  'Neck Base Circumference (mm)',
+                  'Stature (mm)']
+  landmarks: SMPL_INDEX_LANDAMRKS_REVISED
+  seed: 2024
+  weight_init_option: null
+
+
+paths:
+
+  save_path_root: results
+
+  caesar_dir: /data/wear3d
+  fitted_bm_dir: /SMPL-Fitting/results/2023_09_27_12_21_18_standing
+  fitted_nrd_dir: /SMPL-Fitting/results/2023_10_18_23_32_22
+  body_models_path: data/body_models
+  pose_prior_path: data/prior
+  preprocessed_path: /data/wear3d_preprocessed/OnTheFlyCaesar/from_2023_10_18_23_32_22_and_2023_09_27_12_21_18_standing
+  moyo_poses_path: /data/MOYO/20220923_20220926_with_hands/mosh_smpl/train
+
+  caesar_gender_mapper: data/gender/CAESAR_GENDER_MAPPER.npz
+
+
+model_configs:
+  SimpleMLP:
+    hidden_dim1: 194 
+    hidden_dim2: 97
+    output_dim: 11
+
+
+dataset_configs:
+  OnTheFlyCAESAR:
+  NPZDataset:
+      train:
+        dataset_path: data/processed_datasets/data_train
+      val:
+        dataset_path: data/processed_datasets/dataset_val.npz
+      test:
+        dataset_path: data/processed_datasets/data_test_unposed.npz
+  NPZDatasetTrainRobustness:
+  CAESAR:
+    data_dir: /data/wear3d
+    load_countries: All # All or list of countries to load
+    load_measurements: True
+    only_standing_pose: False
+    only_sitting_pose: True
+
+
+feature_transformers:
+  coords:
+    ravel_features: True
+  distances_all:
+    ravel_features: True
+  distances_grouped:
+    grouping_inds_path: "data/landmarks2features/lm2features_distances_grouped_from_SMPL_INDEX_LANDAMRKS_REVISED_inds_removed_inds_with_median_dist_bigger_than_one.npy"
+    ravel_features: True
+
+
+learning_rate_schedulers:
+  ConstantLR:
+
+
+weight_init_options:
+  output_layer_bias_to_mean_measurement:
+    output_layer:
+      bias: [25.28, 32.98, 61.12, 81.38, 97.67, 78.40, 56.25, 84.45, 102.56, 44.49, 170.83]
+      weight: 0.0

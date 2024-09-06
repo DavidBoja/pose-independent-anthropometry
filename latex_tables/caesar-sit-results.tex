@@ -1,0 +1,26 @@
+\begin{table*}[t!]
+\scriptsize
+\begin{center}
+\caption{MAE in mm on the sitting test set. We abbreviate the measurements as: Circumferences (C.), Heights (H.) and Lengths (L.). Ambig. stands for ambiguity.}
+\label{tab:caesar-sitting-res}
+\begin{tabular}{|l|c|c||c|c|c||c|c||c|c|c|c|c|}
+\cline{2-11}
+   \multicolumn{1}{c|}{}                    & \multicolumn{5}{c||}{MALE}         & \multicolumn{5}{c|}{FEMALE}       \\ 
+\cline{2-13}
+   \multicolumn{1}{c|}{}                    & \multicolumn{2}{c||}{dense}         & \multicolumn{3}{c||}{sparse}  & \multicolumn{2}{c||}{dense}         & \multicolumn{3}{c|}{sparse} &   AE  & \multirow{ 2}{*}{\tiny Ambig.} \\ \cline{1-11}
+Measurement & {\tiny \cite{scan-db}} & {\tiny \cite{tsoli-mode-based-anthropometry}} & {\tiny baseline} & {\tiny \cite{bojanic_VISAPP24}} & {\tiny Ours} & {\tiny \cite{scan-db}}  & {\tiny \cite{tsoli-mode-based-anthropometry}} & {\tiny baseline} & {\tiny \cite{bojanic_VISAPP24}} & {\tiny Ours} & {\tiny\cite{AE}} & \\ \hline
+Ankle C.                & 5.79    & 5.22    & 29.97     & 11.81 & 7.05         & 7.00    & 6.36    & 19.03 & 31.64     & 7.57      & 4  &    2.62     \\
+Shoulder-elbow L.       & 13.83   & 13.07   & 47.34     & 57.80 & 12.05         & 8.09    & 6.66    & 26.83 & 50.04     & 9.91      & 6  &    1.28    \\
+Shoulder-wrist L.       & 12.75   & 12.29   & 79.14     & 122.21 & 15.21         & 10.89   & 10.49   & 54.77 & 151.11     & 10.56     & -   &   4.04    \\
+Spine-wrist L.          & 11.61   & 11.26   & 67.39     & 115.07 & 18.37         & 13.16   & 12.34   & 52.45 & 164.30     & 12.72     & -   &   3.17    \\
+Chest C.                & 15.40   & 13.86   & 95.77     & 49.69 & 26.63         & 13.48   & 13.05   & 84.59 & 129.33     & 21.57     & 15  &   15.52    \\
+Crotch H.               & 14.19   & 14.54   & 29.85     & 149.51 & 19.87         & 11.03   & 9.66    & 16.59 & 131.48     & 17.13     & 10  &   2.37    \\
+Head C.                 & 6.51    & 5.42    & 17.71     & 28.98 & 9.76         & 7.45    & 5.67    & 17.43 & 28.91     & 10.35     & 5   &   1.56    \\
+Hip C. H.               & 21.41   & 20.84   & 42.27     & 179.59 & 25.17         & 23.72   & 22.26   & 29.73 & 147.54     & 27.07     & -   &   1.49    \\
+Hip C.                  & 13.84   & 13.68   & 62.17     & 36.87 & 30.33         & 17.34   & 15.48   & 48.30 & 61.30     & 58.47     & 12  &   7.08    \\
+Neck base C.            & 13.33   & 13.47   & 52.60     & 18.79 & 14.79         & 16.96   & 15.79   & 52.49 & 24.19     & 17.96     & 11  &    1.67   \\
+Stature                 & 10.59   & 8.99    & 18.28     & 328.21 & 15.93         & 11.40   & 10.28   & 16.30 & 284.39     & 13.80     & 10  &    2.52   \\ \hline \hline
+aMAE                    & 12.65   & 12.05   & 49.32     & 99.86 & 17.74         & 12.77   & 11.64   & 38.05 & 109.48     & 18.83     &   \multicolumn{2}{c}{}  \\    \cline{1-11}  
+\end{tabular}
+\end{center}
+\end{table*}

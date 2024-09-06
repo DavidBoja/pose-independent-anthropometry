@@ -1,0 +1,3 @@
+[submodule "SMPL-Anthropometry"]
+	path = SMPL-Anthropometry
+	url = https://github.com/DavidBoja/SMPL-Anthropometry.git
