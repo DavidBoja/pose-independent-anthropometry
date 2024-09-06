@@ -449,9 +449,13 @@ after which you can evaluate it with:
 ```bash
 python evaluate_baseline.py --dataset_path <path/to/evaluation/dataset>
 ```
+<br>
 
+## 1️⃣ Running [4]
+To run the method from [4], you can go to their repository [Landmarks2Anthropometry](https://github.com/DavidBoja/Landmarks2Anthropometry) and switch to the eccv24 branch where the authors provide the scripts to run their method on the datasets from the paper.
 
-
+<br>
+<br>
 
 ## 📝 Notes
 
@@ -517,4 +521,5 @@ We thank the authors for providing the code.
 
 [1] Tsoli et al.: "Model-based Anthropometry: Predicting Measurements from 3D Human Scans in Multiple Poses" <br>
 [2] Pavlakos et al.: "Expressive Body Capture: 3D Hands, Face, and Body from a Single Image" <br>
-[3] Marsot et al.: "Representing motion as a sequence of latent primitives, a flexible approach for human motion modelling"
+[3] Marsot et al.: "Representing motion as a sequence of latent primitives, a flexible approach for human motion modelling" <br>
+[4] Bojanić et al.: "Direct 3D Body Measurement Estimation from Sparse Landmarks"
