@@ -382,7 +382,7 @@ Note that many of the parameters are not necessary to successfully train the mod
 
 You can use `evaluate.py` to reproduce the results from the paper. We provide our trained model in `results/2024_07_11_09_42_48`.
 
-The `dataset_path` input variable to the `evaluate.py` script should correspond to the paths of the datasets you created in [💻 Datasets](#💻-datasets). If you used our default path, then you can omit setting up `dataset_path`.
+The `dataset_path` input variable to the `evaluate.py` script should correspond to the paths of the datasets you created in [💻 Datasets](#💻-datasets). If you used our default paths, then you can omit it in the following calls.
 
 #### 🧍🏽 CAESAR A-pose (Tables 1 & 2 left part)
 <!-- /pose-independent-anthropometry/data/train_simple_models/data_test_unposed_tsoli_without_bad.npz -->
@@ -396,7 +396,7 @@ python evaluate.py CAESAR_STAND -R results/2024_07_11_09_42_48 --dataset_path <p
 #### 🧍🏽 CAESAR A-pose with noisy landmarks (Tables 1 & 2 right part)
 <!-- /data/wear3d_preprocessed/NoisyCaesarAPOSE_5mm -->
 ```bash
-python evaluate.py CAESAR_NOISY -R results/2024_07_11_09_42_48 --pelvis_normalization
+python evaluate.py CAESAR_NOISY -R results/2024_07_11_09_42_48 --pelvis_normalization --dataset_path <path/to/dataset>
 ```
 
 <br>
@@ -404,7 +404,7 @@ python evaluate.py CAESAR_NOISY -R results/2024_07_11_09_42_48 --pelvis_normaliz
 #### 🪑 CAESAR sitting B-pose (Table 3)
 <!-- /pose-independent-anthropometry/data/train_simple_models/data_test_sit_transf_lm_bm_tsoli_without_bad.npz -->
 ```bash
-python evaluate.py CAESAR_SIT_TRANS_BM -R results/2024_07_11_09_42_48
+python evaluate.py CAESAR_SIT_TRANS_BM -R results/2024_07_11_09_42_48 --dataset_path <path/to/dataset>
 ```
 
 <br>
@@ -412,7 +412,7 @@ python evaluate.py CAESAR_SIT_TRANS_BM -R results/2024_07_11_09_42_48
 #### 💃 CAESAR arbitrary pose (Table 4)
 <!-- /pose-independent-anthropometry/data/train_simple_models/data_test_posed_tsoli_without_bad.npz -->
 ```bash
-python evaluate.py CAESAR_POSED -R results/2024_07_11_09_42_48
+python evaluate.py CAESAR_POSED -R results/2024_07_11_09_42_48 --dataset_path <path/to/dataset>
 ```
 
 <br>
@@ -439,7 +439,7 @@ where `parameters_path` is the path to the SMPL parameters fitted to the scans a
 
 ## 0️⃣ Baseline models
 
-In order to evaluate the baseline on a given dataset, first you need to fit the SMPL body model onto the provided landmarks:
+In order to evaluate the baseline models described in the paper on a given dataset, first you need to fit the SMPL body model onto the provided landmarks by running:
 ```bash
 cd scripts
 python add_shape_to_dataset.py --dataset_path <path/to/dataset>
@@ -494,13 +494,13 @@ which will create a figure named `ambiguity_max_landmarks_wrt_measurements.pdf`.
 
 ## 📊 Dataset statistics
 
-To find out how much is each landmark moved on the body in the Noisy CAESAR dataset run:
+To find out the average displacement of each landmark in the Noisy CAESAR dataset run:
 
 ```bash
 python compute_stats.py NoisyCaesar
 ```
 
-To find out how many and which landmarks are present in the original CAESAR dataset for the sitting pose, run:
+To find out how many and which landmarks are missing in the original CAESAR sitting dataset, run:
 
 ```bash
 python compute_stats.py CAESAR_SITTING
@@ -510,11 +510,11 @@ python compute_stats.py CAESAR_SITTING
 
 ## References
 
-Parts of the code are inspired or copied from [smplify-x](https://github.com/vchoutas/smplify-x) and [3D-CODED](https://github.com/ThibaultGROUEIX/3D-CODED/tree/master).
+Parts of the code are inspired from [smplify-x](https://github.com/vchoutas/smplify-x) and [3D-CODED](https://github.com/ThibaultGROUEIX/3D-CODED/tree/master).
 We thank the authors for providing the code.
 
 <br>
 
 [1] Tsoli et al.: "Model-based Anthropometry: Predicting Measurements from 3D Human Scans in Multiple Poses" <br>
-[2] Pavlakos et al.: "Expressive Body Capture: 3D Hands, Face, and Body from a Single Image"
+[2] Pavlakos et al.: "Expressive Body Capture: 3D Hands, Face, and Body from a Single Image" <br>
 [3] Marsot et al.: "Representing motion as a sequence of latent primitives, a flexible approach for human motion modelling"
