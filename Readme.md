@@ -59,13 +59,17 @@ The datasets used in the paper are either based on [CAESAR](https://www.sae.org/
 
 - The CAESAR dataset is available commercially [here](https://bodysizeshape.com/page-1855750)
 - The DYNA dataset is available freely [here](http://dyna.is.tue.mpg.de/)
-- The 4DHumanOutfit is available freely upon request [here](https://kinovis.inria.fr/4dhumanoutfit/) or by contacting the authors [David Bojanić](https://www.fer.unizg.hr/david.bojanic?) or [Stefanie Wuhrer](https://swuhrer.gitlabpages.inria.fr/website/)
+- The 4DHumanOutfit dataset is available freely upon request [here](https://kinovis.inria.fr/4dhumanoutfit/) or by contacting the authors [David Bojanić](https://www.fer.unizg.hr/david.bojanic?) or [Stefanie Wuhrer](https://swuhrer.gitlabpages.inria.fr/website/)
 
-Once you obtain all of the datasets, we provide scripts to create all of the dataset versions used in the paper. Before that, however, all of the CAESAR datasets have a common preprocessing step we describe next.
+Once you obtain all of the datasets, we provide scripts to create all of the dataset versions used in the paper.
 
 ### CAESAR dataset preprocessing
 
-The dataset structure assumed is the following: `{path/to/CAESAR}/Data AE2000/{country}/PLY and LND {country}/` which contains scans in `.ply.gz` format and landmarks in `.lnd` format, and `country` can be any of the following: Italy, North America or The Netherlands.
+The dataset structure assumed is the following: 
+```
+{path/to/CAESAR}/Data AE2000/{country}/PLY and LND {country}/
+``` 
+which contains scans in `.ply.gz` format and landmarks in `.lnd` format, and `country` can be any of the following: Italy, North America or The Netherlands.
 <br>
 You also need the SMPL fittings to the scans (both the parameter fittings and the vertex fittings) in format `{path/to/fitting}/{subject_name}.npz`. To create the fittings in this format you can use the code from the [SMPL-Fitting](https://github.com/DavidBoja/SMPL-Fitting) repository and run:
 
