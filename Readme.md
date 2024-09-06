@@ -449,10 +449,28 @@ after which you can evaluate it with:
 ```bash
 python evaluate_baseline.py --dataset_path <path/to/evaluation/dataset>
 ```
+
 <br>
 
 ## 1️⃣ Running [4]
-To run the method from [4], you can go to their repository [Landmarks2Anthropometry](https://github.com/DavidBoja/Landmarks2Anthropometry) and switch to the eccv24 branch where the authors provide the scripts to run their method on the datasets from the paper.
+To run the method from [4], you can clone their repository [Landmarks2Anthropometry](https://github.com/DavidBoja/Landmarks2Anthropometry) and switch to the eccv24 branch where the authors provide the scripts to run their method on the datasets from the paper. The datasets are set with the variable `dataset_path` and correspond to the ones created in [💻 Datasets](#💻-datasets).
+
+To evaluate on the CAESAR A-pose, run:
+```bash
+python eccv_stand.py
+```
+To evaluate on the CAESAR A-pose with noisy landmarks, run:
+```bash
+python eccv_noisy.py
+```
+To evaluate on the CAESAR sitting B-pose, run:
+```bash
+python eccv_sit.py
+```
+To evaluate on the CAESAR arbitrary pose, run:
+```bash
+python eccv_posed.py --dataset_path <path/to/CAESAR/posed/dataset>
+```
 
 <br>
 <br>
