@@ -4,7 +4,7 @@
 This Github presents the code for the following paper: ["Pose-independent 3D Anthropometry from Sparse Data"](https://inria.hal.science/hal-04683475/file/eccv_2024_pose_independent_anthropometry_camera_ready.pdf) presented at ECCV 2024 workshop ["T-CAP 2024 Towards a Complete Analysis of People"](https://sites.google.com/view/t-cap-2024/home).
 
 <p align="center">
-  <img src="https://github.com/DavidBoja/pose-independent-anthropometry/blob/main/assets/eccv_teaser.png" width="950">
+  <img src="https://github.com/DavidBoja/pose-independent-anthropometry/blob/master/assets/eccv_teaser.png" width="950">
 </p>
 
 <b> TL;DR :</b> Estimate 11 body measurements from 70 body landmarks of a posed subject. 
