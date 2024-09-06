@@ -158,13 +158,13 @@ where `save_to` is the path where you want to save the created dataset to.
 #### 🧍🏽 CAESAR A-pose with noisy landmarks (Tables 1 & 2 right part)
 <!-- /data/wear3d_preprocessed/NoisyCaesarAPOSE_5mm -->
 To create the dataset, first complete the steps from [CAESAR preprocessing](#caesar-dataset-preprocessing).
-Since the noise is added randomly, we provide the dataset we used in our paper. More concretely we provide the vector displacements in `data/processed_datasets/dataset_test_unposed_noisy_displacements`. To obtain the noisy landamrks you need to add the displacements to the original landmarks provided in the CAESAR dataset as:
+Since the noise is added randomly, we provide the vector displacements from the original landmarks in `data/processed_datasets/dataset_test_unposed_noisy_displacements`. To obtain the noisy landmarks you need to add the displacements to the original landmarks provided in the CAESAR dataset as:
  ```python
  ceasar_noisy_landmarks = caesar_landmarks + displacement_vector
  ```
 
 
-If you want to create your own noisy dataset, you can run:
+If you, however, want to create your own noisy dataset, you can run:
 ```bash
 cd scripts
 
@@ -194,7 +194,7 @@ cd scripts
 python create_CAESAR_SITTING_test_dataset.py --save_to <path/to/save/the/dataset/to> --transferred_landmark_path <path/to/transferred/landmarks>
 ```
 
-where `save_to` is the path where you want to save the created dataset to and `transferred_landmark_path` is the path where you saved the landmarks from the code above.
+where `save_to` is the path where you want to save the created dataset to and `transferred_landmark_path` is the path where you saved the transferred landmarks from the code above.
 
 <br>
 
