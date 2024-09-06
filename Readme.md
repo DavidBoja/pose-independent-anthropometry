@@ -324,7 +324,7 @@ The training parameters are set in `configs/config_real.yaml`. To train the same
 - `model_name`: (str) name of the model to train, defined in `models.py`
 - `dataset_name`: (str) name of the dataset to use defined in `dataset.py` - actual data used is defined in `dataset_configs` below
 - `save_model`: (bool) save trained model or not
-- `what_to_return`: (list) of variables the dataset will return to the training script (depends on the dataset used)
+- `what_to_return`: (list) list of variables the dataset will return to the training script (depends on the dataset used)
 - `transform_landmarks`: (list) of feature transformers defined in `feature_transformers` below - they transform the input data for the model
 - `landmark_normalization`: (str) of how to normalize the landmarks (only `pelvis` is acceptable)
 - `batch_size`: (int) model batch size
@@ -343,11 +343,11 @@ The training parameters are set in `configs/config_real.yaml`. To train the same
 - `caesar_dir`: (str) path to the CAESAR dataset
 - `fitted_bm_dir`: (str) path to the SMPL fitted body models (see [CAESAR preprocessing](#caesar-dataset-preprocessing))
 - `fitted_nrd_dir`: (str) path to the SMPL fitted vertices (see [CAESAR preprocessing](#caesar-dataset-preprocessing))
-- `body_models_path`: (str) path to the SMPL body models (see [Getting started](#🔨-getting-started))
+- `body_models_path`: (str) path to the SMPL body models (see [Getting started](#🔨getting-started))
 - `pose_prior_path`: (str) path to the pose prior from [2]
 - `preprocessed_path`: (str) path to the preprocessed files used to unpose and repose the CAESAR scans in the OnTheFlyCAESAR dataset
 - `moyo_poses_path`: (str) path to the MOYO dataset
-- `caesar_gender_mapper`: (str) path to the CAESAR gender mapper file which maps a subject name to their provided gender (sex to be precise)
+- `caesar_gender_mapper`: (str) path to the CAESAR gender mapper file which maps a subject name to their provided sex
 
 **model_configs parameters:**
 
@@ -365,12 +365,13 @@ The training parameters are set in `configs/config_real.yaml`. To train the same
 
 **learning_rate_schedulers parameters:**
 
-- `coords`: returns the input landmarks and ravels into a single dimension vector if required
+- `ConstantLR`: keeps a constant learning rate defined in `init_lr`
 
 **weight_init_options parameters:**
 
 - `output_layer_bias_to_mean_measurement`: initialize the output layer of the SimpleMLP to the mean training set measurements
 
+<br>
 
 Note that many of the parameters are not necessary to successfully train the model.
 
