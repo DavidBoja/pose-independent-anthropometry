@@ -17,7 +17,7 @@ This Github presents the code for the following paper: ["Pose-independent 3D Ant
 
 ## 🔨 Getting started
 
-You can use a docker container to facilitate running the code. After cloning the repo, run in terminal:
+You can use 🐳 docker to facilitate running the code. After cloning the repo, run in terminal:
 
 ```bash
 cd docker
@@ -25,7 +25,7 @@ sh build.sh
 sh docker_run.sh CODE_PATH DATA_PATH
 ```
 
-by adjusting the `CODE_PATH` to the `pose-independent-anthropometry` directory location and `DATA_PATH` is the directory of the data you want to access in the docker. This creates a `pose-independent-anthropometry-container` container. You can attach to it by running:
+by adjusting the `CODE_PATH` to the cloned `pose-independent-anthropometry` directory and `DATA_PATH` to the data directory you want to access in the docker container. This creates a `pose-independent-anthropometry-container` which you can attach to by running:
 
 ```bash
 docker exec -it pose-independent-anthropometry-container /bin/bash
@@ -35,21 +35,15 @@ docker exec -it pose-independent-anthropometry-container /bin/bash
 
 <br>
 
-Next, download the SMPL body model from [here](https://github.com/vchoutas/smplx#downloading-the-model) and put the  `SMPL_{GENDER}.pkl` (MALE, FEMALE and NEUTRAL) models into the `data/body_models/smpl` folder.
+Download:
+- the SMPL body model from [here](https://github.com/vchoutas/smplx#downloading-the-model) and put the `SMPL_{SEX}.pkl` (MALE, FEMALE and NEUTRAL) models into the `data/body_models/smpl` folder
+- the `smpl_train_poses.npz` and `smpl_val_poses.npz` from [here](https://drive.google.com/drive/folders/1lvxwKcqi4HaxTLQlEicPhN5Q3L-aWjYN) and put them in the folder `data/poses`
+- the `gmm_08.pkl` file from [here](https://smplify.is.tue.mpg.de/) and put it in the `data/prior` folder.
 
-<br>
-
-Next, download the `smpl_train_poses.npz` and `smpl_val_poses.npz` from [here](https://drive.google.com/drive/folders/1lvxwKcqi4HaxTLQlEicPhN5Q3L-aWjYN) and put them in the folder `data/poses`.
-
-Next, download the `gmm_08.pkl` file from [here](https://smplify.is.tue.mpg.de/) and put it in the `data/prior` folder.
-
-Next, initialize the chamfer distance and smpl-anthropometry submodule by running:
-
+Finally, initialize the smpl-anthropometry submodule by running:
 ```bash
 git submodule update --init --recursive
 ```
-
-Finally, you can download the datasets and model weights from [here]().
 
 <br>
 <br>
