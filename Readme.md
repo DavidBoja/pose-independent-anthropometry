@@ -70,8 +70,15 @@ The dataset structure assumed is the following:
 {path/to/CAESAR}/Data AE2000/{country}/PLY and LND {country}/
 ``` 
 which contains scans in `.ply.gz` format and landmarks in `.lnd` format, and `country` can be any of the following: Italy, North America or The Netherlands.
+
 <br>
-You also need the SMPL fittings to the scans (both the parameter fittings and the vertex fittings) in format `{path/to/fitting}/{subject_name}.npz`. To create the fittings in this format you can use the code from the [SMPL-Fitting](https://github.com/DavidBoja/SMPL-Fitting) repository and run:
+You also need the SMPL fittings to the scans (both the parameter fittings and the vertex fittings) in format 
+
+```
+{path/to/fitting}/{subject_name}.npz
+```
+
+To create the fittings in this format you use the [SMPL-Fitting](https://github.com/DavidBoja/SMPL-Fitting) repository and run:
 
 ```bash
 python fit_body_model.py onto_dataset --dataset_name CAESAR
@@ -89,9 +96,6 @@ Finally, adjust the following paths in `configs/config_real.yaml`:
 - `fitted_nrd_dir`: path to the fitted vertices to the CAESAR dataset obtained from the SMPL-Fitting repository
 
 <br>
-
-To know exactly which subjects and poses we used to create the datasets, download the `data` folder provided [here]() and put its contents in `/pose-independent-anthropometry/data`.
-
 
 ### Training data
 <!-- /data/wear3d_preprocessed/data_train_posed_normalized_tsoli_without_bad -->
