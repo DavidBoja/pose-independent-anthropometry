@@ -457,15 +457,15 @@ To run the method from [4], you can clone their repository [Landmarks2Anthropome
 
 To evaluate on the CAESAR A-pose, run:
 ```bash
-python eccv_stand.py
+python eccv_stand.py --dataset_path <path/to/CAESAR/Apose/dataset>
 ```
 To evaluate on the CAESAR A-pose with noisy landmarks, run:
 ```bash
-python eccv_noisy.py
+python eccv_noisy.py --dataset_path <path/to/CAESAR/Apose/noisy/dataset>
 ```
 To evaluate on the CAESAR sitting B-pose, run:
 ```bash
-python eccv_sit.py
+python eccv_sit.py --dataset_path <path/to/CAESAR/Bpose/dataset>
 ```
 To evaluate on the CAESAR arbitrary pose, run:
 ```bash
