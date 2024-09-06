@@ -302,13 +302,15 @@ To visualize the loss curves during training run in a seperate terminal:
 ```bash
 visdom -p <port>
 ```
-and navigate in your browser to `http://localhost:<port>/` to keep track of the training loss curves. If you do not see any curves, make sure you choose the `lm2meas` environment in the dropdown menu and make sure the port you choose is the same one as in `configs/config_real.yaml` under `visualization/port`.
+and navigate in your browser to `http://localhost:<port>/`. If you do not see any curves, make sure you choose the `lm2meas` environment in the dropdown menu and make sure the port you choose is the same one as in `configs/config_real.yaml` under `visualization/port`.
+
+<br>
 
 The training parameters are set in `configs/config_real.yaml`. To train the same model as in our paper, you can leave all the parameters as they are except potentially fixing the paths defined throught the configuration file. We briefly explain all the parameters for easier reference:
 
 **general parameters:**
 
-- `continue_experiment`: (str) name of experiment in format "%Y_%m_%d_%H_%M_%S" in the results folder you want to continue running
+- `continue_experiment`: (str) name of the experiment in format "%Y_%m_%d_%H_%M_%S" from the results folder you wish to continue running
 - `experiment_name`: (str) name your experiment for easier reference
 
 **visualization parameters:**
