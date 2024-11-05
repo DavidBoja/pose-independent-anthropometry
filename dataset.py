@@ -552,6 +552,73 @@ class NPZDatasetTrainRobustness(Dataset):
         
         return current_data
     
+
+class NPZFrontalDataset(Dataset):
+    def __init__(self, 
+                 dataset_path: str,
+                 what_to_return: List[str] =["landmarks","measurements"],
+                 **kwargs
+                 ):
+        """
+        Dataset defined with a .npz file or folder with .npz files
+        The .npz files are data points of subjects with landmarks and measurements
+
+        :param dataset_path: (str) path to the .npz file or folder with .npz files
+        :param what_to_return: (List[str]) list of keys to return from the .npz
+        """
+        
+        if dataset_path.endswith(".npz"):
+            self.data_orig = np.load(dataset_path)
+            self.data = {name: (torch.from_numpy(self.data_orig[name])
+                                                 if self.data_orig[name].dtype.type not in [np.str_] else self.data_orig[name]) 
+                         for name in self.data_orig.keys()
+                         }
+        # if path is a flder with .npz files
+        else:
+            all_files = sorted(glob(os.path.join(dataset_path,"*.npz")))
+            first_example = np.load(all_files[0])
+            self.data = {name : [] for name in first_example.keys()}
+            # self.possible_returns = list(first_example.keys())
+
+            for fl in all_files:
+                d = np.load(fl)
+                for name in d.keys():
+                    self.data[name].append(d[name])
+
+            for name in self.data.keys():
+                if np.array(self.data[name]).dtype.type not in [np.str_]:
+                    if name not in ["indices_verts","indices_lm"]:
+                        self.data[name] = torch.from_numpy(np.array(self.data[name]))
+                    else:
+                        self.data[name] = np.array(self.data[name])
+                else:
+                    self.data[name] = self.data[name]
+
+        self.possible_returns = list(self.data.keys())
+
+        self.what_to_return = what_to_return
+
+        if "use_measurements" in kwargs:
+            self.use_measurements = kwargs["use_measurements"]
+
+    def __len__(self):
+        return self.data["landmarks"].shape[0]
+
+    def __getitem__(self, index):
+
+        return_dict = {name: self.data[name][index]
+                        for name in self.what_to_return
+                        if name in self.possible_returns}
+        
+        lm_full = return_dict["landmarks"]
+        lm_partial_inds = self.data["indices_lm"][index]
+        lm_full[lm_partial_inds] = 0
+
+        return_dict["landmarks"] = lm_full
+        
+        return return_dict
+    
+    
 class CAESAR(Dataset):
     '''
     CAESAR dataset

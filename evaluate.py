@@ -168,7 +168,8 @@ class Tester(object):
                                            "CAESAR_SIT_TRANS_NRD",
                                            "CAESAR_POSED",
                                            "FAUST_POSED",
-                                           "DYNA_POSED"
+                                           "DYNA_POSED",
+                                           "CAESAR_PARTIAL_FRONTAL_APOSE"
                                            ]:
             self.evaluate_npz()
         elif self.opt["subaparser_name"] == "CAESAR_NOISY":
@@ -219,7 +220,7 @@ class Tester(object):
             inputs = torch.cat(inputs,1)
 
             inputs = inputs.cuda().float()
-            measurements_gt = measurements_gt.cuda.float() if not isinstance(measurements_gt, type(None)) else None
+            measurements_gt = measurements_gt.cuda().float() if not isinstance(measurements_gt, type(None)) else None
             pred_measurements = self.network(inputs)
             self.track_loss(pred_measurements, measurements_gt, name, gender)
 
@@ -354,7 +355,11 @@ class Tester(object):
             cols = self.evaluate_on_measurements
 
             if not isinstance(self.tracked_gender[0],type(None)):
-                tracked_genders = np.array([x.lower() for x in self.tracked_gender])
+                if isinstance(self.tracked_gender[0], np.ndarray):
+                    tracked_genders = np.array([x.item().lower() for x in self.tracked_gender])
+                else:
+                    tracked_genders = np.array([x.lower() for x in self.tracked_gender])
+
                 for gender in ["female","male"]:
 
                     if gender in tracked_genders:
@@ -549,6 +554,16 @@ if __name__ == "__main__":
     parser_caesar_posed.add_argument("--show_stats", default=["aMAE"],
                                 help="Eval stats to show.")
     parser_caesar_posed.add_argument("--save_results", action="store_true",
+                        help="Save evaluation results.")
+
+    parser_caesar_partial_frontal_apose = subparsers.add_parser('CAESAR_PARTIAL_FRONTAL_APOSE')
+    parser_caesar_partial_frontal_apose.add_argument("-R","--results_path", type=str, required=True)
+    parser_caesar_partial_frontal_apose.add_argument("--dataset_name", type=str, default="NPZFrontalDataset")
+    parser_caesar_partial_frontal_apose.add_argument("--dataset_path", type=str, 
+        default="/data/wear3d_preprocessed/data_test_partial_frontal_APOSE_tsoli_without_bad")
+    parser_caesar_partial_frontal_apose.add_argument("--show_stats", default=["aMAE"],
+                                help="Eval stats to show.")
+    parser_caesar_partial_frontal_apose.add_argument("--save_results", action="store_true",
                         help="Save evaluation results.")
     
 

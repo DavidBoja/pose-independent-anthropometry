@@ -1,0 +1,25 @@
+
+ECCV work adapted for frontal partial landmarks -> measurements for David Bojanić PhD thesis
+"Learning to estimate anthropometric measurements from partial 3D data"
+
+DATA
+- frontal partial training dataset with create_PARTIAL_CAESAR_APOSE_train_dataset.py 
+    -> saved into /data/wear3d_preprocessed/data_train_partial_frontal_APOSE_tsoli_without_bad
+- same for val as create_PARTIAL_CAESAR_APOSE_vals_dataset
+    -> saved into /data/wear3d_preprocessed/data_val_partial_frontal_APOSE_tsoli_without_bad
+
+- train and val on partial frontal scans
+- test on same thing
+
+# TRAIN
+python train.py
+visdom -p 8080
+
+# EVAL
+python evaluate.py CAESAR_PARTIAL_FRONTAL_APOSE -R results/2024_10_20_16_38_29
+
+# BASELINE RESULTS on zver8
+python evaluate_fitting.py anthropometry -F results/2024_01_05_15_33_49 --select_examples data/CAESAR_samples/CAESAR_TSOLI_TEST_WITHOUT_BAD.txt --which_measurements SMPL_COMPLEX_MEASUREMENTS --smpl2real_path aistats24/saved_models/smpl2real_measurements/bayesian_ridge_on_2023_10_18_23_32_22_complex2real_trained_on_TSOLI_TRAIN_AND_VAL_without_bad
+
+# SIMILAR EXPERIMENT IN (WITH HIGHER ERRORS)
+experimenting/thesis_smpl2real.ipynb

@@ -98,3 +98,49 @@ def viz_scatter(fig,pts,color,pt_size=8,name="pts",symbol="circle"):
     fig.add_trace(plot_subj)
 
     return fig
+
+def add_coordinate_axes(fig, scale=1):
+    
+    axes_plot = go.Scatter3d(x=[0,scale,None,0,0,None,0,0,None], 
+                             y=[0,0,None,0,scale,None,0,0,None], 
+                             z=[0,0,None,0,0,None,0,scale,None],
+                            marker=dict(
+                                size=4,
+                                color='black'),
+                            line=dict(
+                                color=['purple']*3 + ['green']*3 + ['blue']*3,
+                                width=10),
+                            name='AXES'
+                        )
+    
+    fig.add_trace(axes_plot)
+    
+    annotation_list = []
+    for ax_color, ax_name, ax_coord, ax_text_angle in \
+                    zip(["purple","green","blue"],
+                       ["X-AX","Y-AX","Z-AX"],
+                       [[scale,0,0],[0,scale,0],[0,0,scale]],
+                       [0,0,-90]):
+        ax_annotation = dict(
+            showarrow=False,
+            x=ax_coord[0],
+            y=ax_coord[1],
+            z=ax_coord[2],
+            textangle=ax_text_angle,
+            font=dict(
+                color=ax_color,
+                size=12
+            ),
+            text=ax_name,
+            xanchor="right",
+#             xshift=20,
+#             yshift=1,
+            opacity=0.8)
+        
+        annotation_list.append(ax_annotation)
+    
+    fig.update_layout(
+        scene=dict(annotations=annotation_list)
+        )
+    
+    return fig

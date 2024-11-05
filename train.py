@@ -4,14 +4,22 @@ from utils import load_config, set_seed
 import time
 from termcolor import colored
 
-from trainers import TrainLm2MeasPosedReal as Trainer
+from trainers import TrainFrontalLm2MeasPosedReal as Trainer
+import argparse
 
 
 
 
 if __name__ == "__main__":
 
-    opt = load_config("configs/config_real.yaml")
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--config_path", 
+        type=str,
+        default="configs/config_real.yaml")
+    args = parser.parse_args()
+
+    opt = load_config(args.config_path)
 
     continuing_experiment = opt["general"]["continue_experiment"]
     if not isinstance(continuing_experiment,type(None)):

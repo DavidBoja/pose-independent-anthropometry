@@ -1031,7 +1031,7 @@ class LM2Features():
         if isinstance(self.landmark_normalization, str) and self.landmark_normalization in ["Substernale","Nose","BELLY_BUTTON"]:
             self.n_landmarks -= 1 # 1 landmark is deleted because used as normalizing landmark
 
-        if self.transform_landmarks == "coords":
+        if self.transform_landmarks in ["coords","squared_coords"]:
             self.out_dim = self.n_landmarks * 3
 
         if self.transform_landmarks == "vectors_all":
@@ -1046,7 +1046,7 @@ class LM2Features():
             #                                 in self.distances_grouped_dict.items()]).item()
             self.out_dim = len(self.inds0)
 
-        if self.transform_landmarks == "distances_all":
+        if self.transform_landmarks in ["distances_all","squared_distances_all"]:
             # pairwise distances are NxN and then subtract the diagonal elements
             self.out_dim = (self.n_landmarks * self.n_landmarks) - self.n_landmarks
 
@@ -1073,6 +1073,11 @@ class LM2Features():
             # (B,n_landm,3) -> (B,n_landm*3)
             landmarks = landmarks.reshape(landmarks.shape[0],-1)
         return landmarks
+    
+    def squared_coords(self, landmarks, **kwargs):
+        if self.ravel_features:
+            landmarks = landmarks.reshape(landmarks.shape[0],-1)
+        return landmarks **2
 
     def vectors_all(self, landmarks, **kwargs):
         """
@@ -1118,19 +1123,26 @@ class LM2Features():
         return features
 
     def distances_all(self, landmarks, **kwargs):
+        #print(landmarks.shape)
         # lm are shape B x n_landmarks x 3
         B = landmarks.shape[0]
         dists = pairwise_dist(landmarks, 
-                              landmarks).squeeze()
+                              landmarks)#.squeeze()
         dists = torch.sqrt(dists)
 
         # get only non-diagonal elements and flatten to B x n_landmarks**2
         mask = torch.eye(self.n_landmarks).bool().repeat(B,1,1)
+        #print(mask.shape)
+        #print(dists.shape)
         dists = dists[~mask].reshape(B,-1)
 
         # if self.ravel_features:
         #     dists = dists.reshape(B,-1)
         return dists
+    
+    def squared_distances_all(self, landmarks, **kwargs):
+        dists = self.distances_all(landmarks, **kwargs)
+        return dists ** 2
 
     def distances_grouped(self, landmarks, **kwargs):
         """
@@ -1488,6 +1500,49 @@ def pelvis_normalization(
 
     if return_transformations:
         return landmarks, centroid, R2y.float(), R2z.float()
+    else:
+        return landmarks
+    
+
+def frontal_normalization(
+                         landmarks,
+                         substernale_ind, supramenton_ind,
+                         rt_thelion_ind,lt_thelion_ind,
+                         return_transformations=False):
+    """
+    Normalize scan on frontal view. The steps are:
+    1. center on substernale lm
+    2. orient substernale->supramenton vec to y-ax
+    3. orient rt_thelion -> lt_thelion  vec to x-ax
+
+    :param landmarks: (torch.tensor) dim (K,3) of the landmarks
+    :param substernale_ind: (int) index of substernale landmark
+    :param rt_thelion_ind: (int) index of right thelion landmark
+    :param lt_thelion_ind: (int) index of left thelion landmark
+    :param supramenton_ind: (int) index of supramenton landmark
+    :param return_transformations: (bool) if True, return the transformations applied to landmarks
+    """
+
+    # 1. center on substernale lm
+    centroid = landmarks[substernale_ind] 
+    landmarks = landmarks - landmarks[substernale_ind] 
+    
+    # 2. orient substernale->supramenton vec to y-ax
+    R2y = rotation_matrix_from_vectors_torch(landmarks[supramenton_ind],
+                                        torch.tensor([0,0,1],dtype=landmarks.dtype))
+    landmarks = torch.matmul(landmarks, R2y.T) # K x 3
+    
+
+
+    # 3. orient rt_thelion -> lt_thelion  vec to x-ax
+    vec_chest = landmarks[lt_thelion_ind] - landmarks[rt_thelion_ind]
+    R2x = rotation_matrix_from_vectors_torch(vec_chest,
+                                        torch.tensor([1,0,0],dtype=landmarks.dtype))
+    landmarks = torch.matmul(landmarks, R2x.T) # K x 3
+
+
+    if return_transformations:
+        return landmarks, centroid, R2y.float(), R2x.float()
     else:
         return landmarks
        
